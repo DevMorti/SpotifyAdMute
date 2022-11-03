@@ -12,6 +12,7 @@ namespace SpotifyAdBlock
     {
         static void Main(string[] args)
         {
+            MuteControl.Control();
         }
     }
 }
