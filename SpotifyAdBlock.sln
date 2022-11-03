@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAdBlock", "SpotifyAdBlock\SpotifyAdBlock.csproj", "{A5C7C393-7806-415E-963D-726EC4CAE3C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5C7C393-7806-415E-963D-726EC4CAE3C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5C7C393-7806-415E-963D-726EC4CAE3C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5C7C393-7806-415E-963D-726EC4CAE3C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5C7C393-7806-415E-963D-726EC4CAE3C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {515D08DB-F17B-4E11-9480-132ECB5F1196}
+	EndGlobalSection
+EndGlobal
