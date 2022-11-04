@@ -16,51 +16,55 @@ namespace SpotifyAdBlock
         internal static void Control()
         {
             Process.Start("Spotify");
-            while (true)
+            Thread.Sleep(1000);
+            if(Audio.Mute)
             {
                 WaitForMusic();
                 Audio.Mute = false;
+            }
+            while (true)
+            {
                 WaitForAds();
                 Audio.Mute = true;
+                WaitForMusic();
+                Audio.Mute = false;
             }
         }
 
         internal static void WaitForAds()
         {
-            bool noAds = true;
-            do
+            while(true)
             {
+                Process spotify = GetSpotify();
+                if (spotify.MainWindowTitle == "Advertisement")
+                    break;
                 Thread.Sleep(1000);
-                Process[] processes = Process.GetProcessesByName("Spotify");
-                foreach (Process process in processes)
-                {
-                    if ((!process.MainWindowTitle.Contains('-') && process.MainWindowTitle != "") || process.MainWindowTitle == "Spotify Free" || process.MainWindowTitle == "Advertisement")
-                    {
-                        noAds = false;
-                        Debug.WriteLine(process.MainWindowTitle + " wurde als Werbung eingestuft.");
-                        break;
-                    }
-                }
-            } while (noAds);
+            }
         }
 
         internal static void WaitForMusic()
         {
-            bool noAds = false;
-            do
-            {
+            while(true)
+            { 
+                Process spotify = GetSpotify();
+                if (spotify.MainWindowTitle != "Advertisement")
+                    break;
                 Thread.Sleep(1000);
-                Process[] processes = Process.GetProcessesByName("Spotify");
-                foreach (Process process in processes)
-                {
-                    if (process.MainWindowTitle.Contains('-'))
-                    {
-                        Debug.WriteLine(process.MainWindowTitle + " wurde als Musik eingestuft.");
-                        noAds = true;
-                        break;
-                    }
-                }
-            } while (!noAds);
+            }
+        }
+
+        internal static Process GetSpotify()
+        {
+            Process spotify = new Process();
+            try
+            {
+                spotify = Process.GetProcessesByName("Spotify").Single(process => process.MainWindowTitle != "");
+            }
+            catch
+            {
+                Environment.Exit(0);
+            }
+            return spotify;
         }
     }
 }
