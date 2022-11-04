@@ -1,13 +1,7 @@
-﻿using NAudio.Midi;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using System.Net;
 
 namespace SpotifyAdBlock
 {
