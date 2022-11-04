@@ -10,7 +10,7 @@ namespace SpotifyAdBlock
         internal static void Control()
         {
             Process.Start("Spotify");
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             if(Audio.Mute)
             {
                 WaitForMusic();
@@ -30,7 +30,7 @@ namespace SpotifyAdBlock
             while(true)
             {
                 Process spotify = GetSpotify();
-                if (spotify.MainWindowTitle == "Advertisement")
+                if (spotify.MainWindowTitle == "Advertisement" || spotify.MainWindowTitle == "Spotify Free")
                     break;
                 Thread.Sleep(1000);
             }
@@ -41,7 +41,7 @@ namespace SpotifyAdBlock
             while(true)
             { 
                 Process spotify = GetSpotify();
-                if (spotify.MainWindowTitle != "Advertisement")
+                if (spotify.MainWindowTitle != "Advertisement" && spotify.MainWindowTitle != "Spotify Free")
                     break;
                 Thread.Sleep(1000);
             }
