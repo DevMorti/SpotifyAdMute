@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -27,24 +28,29 @@ namespace SpotifyAdBlock
 
         internal static void WaitForAds()
         {
+            Process spotify;
             while(true)
             {
-                Process spotify = GetSpotify();
-                if (spotify.MainWindowTitle == "Advertisement" || spotify.MainWindowTitle == "Spotify Free")
+                spotify = GetSpotify();
+                if (spotify.MainWindowTitle == "Advertisement" || spotify.MainWindowTitle == "Spotify Free" || !spotify.MainWindowTitle.Contains('-'))
                     break;
                 Thread.Sleep(1000);
             }
+            WriteLog(spotify, "Werbung");
         }
 
         internal static void WaitForMusic()
         {
+            Process spotify;
             while(true)
             { 
-                Process spotify = GetSpotify();
-                if (spotify.MainWindowTitle != "Advertisement" && spotify.MainWindowTitle != "Spotify Free")
+                spotify = GetSpotify();
+                if (spotify.MainWindowTitle != "Advertisement" && spotify.MainWindowTitle != "Spotify Free" && spotify.MainWindowTitle.Contains('-'))
                     break;
                 Thread.Sleep(1000);
             }
+            WriteLog(spotify, "Musik");
+            Thread.Sleep(500);
         }
 
         internal static Process GetSpotify()
@@ -59,6 +65,21 @@ namespace SpotifyAdBlock
                 Environment.Exit(0);
             }
             return spotify;
+        }
+
+        internal static void WriteLog(Process process, string message)
+        {
+            try
+            {
+                FileInfo file = new FileInfo(AppContext.BaseDirectory + "Mute.log");
+                if (!file.Exists)
+                    file.Create();
+                using (StreamWriter stream = file.AppendText())
+                {
+                    stream.WriteLine(process.MainWindowTitle + " - " + DateTime.Now + " - " + message);
+                }
+            }
+            catch { }
         }
     }
 }
