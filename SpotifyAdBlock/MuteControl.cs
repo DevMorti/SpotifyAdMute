@@ -14,43 +14,29 @@ namespace SpotifyAdBlock
             Thread.Sleep(3000);
             if(Audio.Mute)
             {
-                WaitForMusic();
+                WaitFor(false);
                 Audio.Mute = false;
             }
             while (true)
             {
-                WaitForAds();
+                WaitFor(true);
                 Audio.Mute = true;
-                WaitForMusic();
+                WaitFor(false);
                 Audio.Mute = false;
             }
         }
 
-        internal static void WaitForAds()
+        internal static void WaitFor(bool forAds)
         {
             Process spotify;
             while(true)
             {
                 spotify = GetSpotify();
-                if (spotify.MainWindowTitle == "Advertisement" || spotify.MainWindowTitle == "Spotify Free" || !spotify.MainWindowTitle.Contains('-'))
+                if (IsAd(spotify) == forAds)
                     break;
                 Thread.Sleep(1000);
             }
             WriteLog(spotify, "Werbung");
-        }
-
-        internal static void WaitForMusic()
-        {
-            Process spotify;
-            while(true)
-            { 
-                spotify = GetSpotify();
-                if (spotify.MainWindowTitle != "Advertisement" && spotify.MainWindowTitle != "Spotify Free" && spotify.MainWindowTitle.Contains('-'))
-                    break;
-                Thread.Sleep(1000);
-            }
-            WriteLog(spotify, "Musik");
-            Thread.Sleep(500);
         }
 
         internal static Process GetSpotify()
@@ -80,6 +66,11 @@ namespace SpotifyAdBlock
                 }
             }
             catch { }
+        }
+
+        internal static bool IsAd(Process spotify)
+        {
+            return spotify.MainWindowTitle == "Advertisement" || spotify.MainWindowTitle == "Spotify Free" || !spotify.MainWindowTitle.Contains('-');
         }
     }
 }
