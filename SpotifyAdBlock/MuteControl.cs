@@ -48,6 +48,7 @@ namespace SpotifyAdBlock
             }
             catch
             {
+                Audio.Mute = false;
                 Environment.Exit(0);
             }
             return spotify;
